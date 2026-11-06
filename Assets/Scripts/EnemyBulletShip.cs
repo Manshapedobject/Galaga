@@ -1,9 +1,11 @@
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class EnemyBulletShip : MonoBehaviour
 {
     public float speed = 3;
     public GameObject bullet;
+    public GameObject explosion; 
 
     public float bulletTimer = 0, bulletWait = 3;
 
@@ -17,6 +19,24 @@ public class EnemyBulletShip : MonoBehaviour
         {
             bulletTimer = 0;
             Instantiate(bullet, transform.position - new Vector3(0, .5f, 0), Quaternion.identity);
+        }
+
+        if (transform.position.y < -6)
+       
+        {
+            Destroy(gameObject);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player Bullet") || collision.gameObject.CompareTag("GalagaPlayer"))
+        {
+            if (collision.gameObject.CompareTag("Player Bullet"))
+                Destroy(collision.gameObject);
+
+            GameObject temp = Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(temp, 1.0f);
+            Destroy(gameObject);
         }
     }
 }

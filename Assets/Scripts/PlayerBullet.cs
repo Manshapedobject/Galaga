@@ -7,7 +7,7 @@ public int points = 100;
 void Update()
     {
         transform.Translate(transform.up * speed * Time.deltaTime);
-        if(transform.position.x > 7)
+        if(transform.position.y > 6)
         {
             Destroy(gameObject);
         }

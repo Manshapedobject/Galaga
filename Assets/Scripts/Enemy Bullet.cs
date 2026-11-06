@@ -3,16 +3,20 @@ using UnityEngine;
 public class EnemyBullet : MonoBehaviour
 {
     public float speed = 6;
-    void Start()
+   void Update()
     {
         transform.Translate(-transform.up * speed * Time.deltaTime);
-        if (transform.position.y > 6)
+        if (transform.position.y < -6)
         {
             Destroy(gameObject);
         }
     }
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        transform.Translate(-transform.up * speed * Time.deltaTime);
+        if (collision.gameObject.CompareTag("GalagaPlayer"))
+        {
+
+            Destroy(gameObject);
+        }
     }
 }

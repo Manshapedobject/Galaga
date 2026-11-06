@@ -1,11 +1,17 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 
 {   public float speed = 5;
 
-    public GameObject bullet; 
+    public GameObject bullet;
+
+    public Image[] lives;
+    public int lifeCount = 3;
 
 // Update is called once per frame
 void Update()
@@ -37,5 +43,19 @@ void Update()
     
     //Dividing line so I can keep track of my code.
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -7, 7), Mathf.Clamp(transform.position.y, -4, 4), 0);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            lifeCount -= 1;
+            if (lifeCount <= 0)
+            {
+                lifeCount = 0;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            lives[lifeCount].enabled = false;
+        }
     }
 }
